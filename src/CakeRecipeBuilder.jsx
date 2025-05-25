@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import React, { useState } from 'react';
 
 const CakeRecipeBuilder = () => {
 
@@ -33,6 +33,7 @@ const CakeRecipeBuilder = () => {
     
     const units = ['g', 'oz', 'cup', 'NA']
 
+    {/* Custom State Update Handlers */}
     const getBatterIngredients = () => {
         return Object.entries(allIngredients).filter(([name, info]) =>
             info.sections.includes('batter') || info.sections.includes('both')
@@ -159,7 +160,6 @@ const CakeRecipeBuilder = () => {
                     </div>
                 </div>
             </div>
-            
 
             <div className='max-w-4xl mx-auto px-4 py-6 space-y-6'>
                 {/* Recipe Name */}
@@ -168,13 +168,15 @@ const CakeRecipeBuilder = () => {
                         Recipe Name *
                     </label>
                     <input 
-                    type="text" 
-                    value={recipeName}
-                    placeholder='Enter recipe name'
-                    className='w-full p-3 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
+                        type="text" 
+                        value={recipeName}
+                        onChange={(e) => setRecipeName(e.target.value)}
+                        placeholder='Enter recipe name'
+                        className='w-full p-3 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
                     />
                 </div> 
                 {/* End Recipe Name */}
+            
                 
                 {/* Recipe Info */}
                 <div className='bg-white rounded-xl p-6 shadow-sm border border-gray-200'>
@@ -248,26 +250,89 @@ const CakeRecipeBuilder = () => {
                             />
                         </div>
                     </div>
+                </div>
 
-                    {/* Cake Batter Section */}
-                    <div>
-                        <div className='flex items-center justify-between mb-6'>
-                            <h2 className='text-lg font-semibold text-gray-800 flex items-center gap-2'>
-                                Cake Batter Ingredients
-                            </h2>
-                            <button
+                {/* Cake Batter Section */}
+                <div className='bg-white rounded-xl p-6 shadow-sm border border-gray-200 mt-6'>
+                    <div className='flex items-center justify-between mb-6'>
+                        <h2 className='text-lg font-semibold text-gray-800 flex items-center gap-2'>
+                            Cake Batter Ingredients
+                        </h2>
+                        <button
+                            onClick={addBatterIngredient}
                             className='flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
-                            >
-                                Add Ingredient
-                            </button>
-                        </div>
+                        >
+                            + Add Ingredient
+                        </button>
+                    </div>
+
+                    {/* Ingredients List */}
+                    <div className='space-y-3'>
+                        {batterIngredients.length === 0 && (
+                            <p className='text-gray-500 text-center py-8'>No ingredients added yet. Click "Add Ingredient to begin."</p>
+                        )}
+                        {batterIngredients.map((ingredient, index) => (
+                            ingredientRow ({
+                                ingredient, 
+                                index,
+                                section: 'batter',
+                                availableIngredients: getBatterIngredients(),
+                                updateFn: updateBatterIngredient,
+                                removeFn: removeBatterIngredient
+                            })
+                        ))}
                     </div>
                 </div>
+
+                {/* Cake Icing Section */}
+                <div className='bg-white rounded-xl p-6 shadow-sm border border-gray-200'>
+                    <div className='flex items-center justify-between mb-4'>
+                        <h2 className='text-lg font-semibold text-gray-800 flex items-center gap-2'>
+                            Cake Icing Ingredients
+                        </h2>
+                        <button
+                            onClick={addIcingIngredient}
+                            className='flex items-center gap-2 px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors'
+                        >+ Add Ingredient
+                        </button>
+                    </div>
+
+                    <div className='space-y-3'>
+                        {icingIngredients.length === 0 && (
+                            <p className='text-gray-500 text-center py-8'>No ingredients added yet. Click "Add Ingredient to begin."</p>
+                        )}
+                        {icingIngredients.map((ingredient, index) => (
+                            ingredientRow ({
+                                ingredient, 
+                                index,
+                                section: 'icing',
+                                availableIngredients: getIcingIngredients(),
+                                updateFn: updateIcingIngredient,
+                                removeFn: removeIcingIngredient
+                            })
+                        ))}
+                    </div>
+                </div>
+
+                {/* Save and Clear Buttons */}
+                <div className='flex justify-between sm:flex-row gap-3'>
+                    <button
+                        onClick={saveRecipe}
+                        className='flex-1 bg-green-500 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:bg-green-600 transition-colors shadow-sm'
+                    >
+                        Save Recipe
+                    </button>
+                    <button
+                        onClick={clearForm}
+                        className='sm:w-auto bg-gray-500 text-white py-4 px-6 rounded-xl font-semibold hover:bg-gray-600 transition-colors shadow-sm'
+                    >
+                        Clear Form
+                    </button>
+                </div>
+                </div>
             </div>
-        </div>
-    )
-
-}
-
+    );
+};
 
 export default CakeRecipeBuilder;
+
