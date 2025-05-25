@@ -33,6 +33,122 @@ const CakeRecipeBuilder = () => {
     
     const units = ['g', 'oz', 'cup', 'NA']
 
+    const getBatterIngredients = () => {
+        return Object.entries(allIngredients).filter(([name, info]) =>
+            info.sections.includes('batter') || info.sections.includes('both')
+        );
+    };
+
+    const getIcingIngredients = () => {
+        return Object.entries(allIngredients).filter(([name, info]) =>
+            info.sections.includes('icing') || info.sections.includes('both')
+        );
+    };
+
+    const addBatterIngredient = () => {
+        setBatterIngredients([...batterIngredients, { ingredient: '', quantity: '', unit: 'g' }]);
+    };
+
+    const addIcingIngredient = () => {
+        setIcingIngredients([...icingIngredients, { ingredient: '', quantity: '', unit: 'g' }]);
+    };
+
+    const removeBatterIngredient = (index) => {
+        setBatterIngredients(batterIngredients.filter((_, i) => i !== index));
+    };
+
+    const removeIcingIngredient = (index) => {
+        setIcingIngredients(icingIngredients.filter((_, i) => i !== index));
+    };
+
+    const updateBatterIngredient = (index, field, value) => {
+        const updatedIngredients = [...batterIngredients];
+        updatedIngredients[index][field] = value;
+        setBatterIngredients(updatedIngredients);
+    };
+
+    const updateIcingIngredient = (index, field, value) => {
+        const updatedIngredients = [...icingIngredients];
+        updatedIngredients[index][field] = value;
+        setIcingIngredients(updatedIngredients);
+    };
+
+    const saveRecipe = () => {
+        if (!recipeName.trim()) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        
+        const recipe = {
+            name: recipeName,
+            bakeTemp: `${bakeTemp}${tempUnit}`,
+            bakeTime: `${bakeTime} minutes`,
+            servingSize,
+            notes,
+            batterIngredients: batterIngredients.filter(ing => ing.ingredient && ing.quantity),
+            icingIngredients: icingIngredients.filter(ing => ing.ingredient && ing.quantity),
+        };
+
+        console.log('Recipe saved:', recipe);
+        alert('Recipe saved successfully!');
+    };
+
+    const clearForm = () => {
+        if (confirm('Are you sure you want to clear the form?')) {
+            setRecipeName('');
+            setBakeTemp('');
+            setBakeTime('');
+            setServingSize('');
+            setNotes('');
+            setBatterIngredients([]);
+            setIcingIngredients([]);
+        }
+    };
+
+    const ingredientRow = ({ ingredient, index, section, availableIngredients, updateFn, removeFn}) => (
+        <div className='flex gap-2 items-center bg-white p-3 rounded-lg border border-gray-200 shadow-sm'>
+            <select
+                value={ingredient.ingredient}
+                onChange={(e) => updateFn(index, 'ingredient', e.target.value)}
+                className='flex-1 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+            >
+                <option value="">Select Ingredient</option>
+                {availableIngredients.map(([name]) => (
+                    <option key={name} value={name}>
+                        {name}
+                </option>
+                ))}
+            </select>
+
+            <input 
+                type="number"
+                placeholder='Quantity'
+                value={ingredient.quantity}
+                onChange={(e) => updateFn(index, 'quantity', e.target.value)}
+                className='w-20 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
+                step='0.01'
+                min='0'
+            />
+            <select
+                value={ingredient.unit}
+                onChange={(e) => updateFn(index, 'unit', e.target.value)}
+                className='w-16 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+            >
+                {units.map((unit) => (
+                    <option key={unit} value={unit}>
+                        {unit}
+                    </option>
+                ))}
+            </select>
+
+            <button
+                onClick={() => removeFn(index)}
+                className='p-2 rounded-md text-red-500 hover:text-red-50 transition-colors'
+            >
+            </button>
+        </div>
+    );
+        
     return (    
         <div className='min-h-screen bg-gradient-to-br from-orange-50 to-pink-50'>
             {/* Header */}
