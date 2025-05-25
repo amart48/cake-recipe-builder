@@ -113,10 +113,11 @@ const CakeRecipeBuilder = () => {
                 onChange={(e) => updateFn(index, 'ingredient', e.target.value)}
                 className='flex-1 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
             >
-                <option value="">Select Ingredient</option>
+                <option value="">Select Ingredient...</option>
                 {availableIngredients.map(([name]) => (
                     <option key={name} value={name}>
                         {name}
+
                 </option>
                 ))}
             </select>
@@ -256,7 +257,7 @@ const CakeRecipeBuilder = () => {
                 <div className='bg-white rounded-xl p-6 shadow-sm border border-gray-200 mt-6'>
                     <div className='flex items-center justify-between mb-6'>
                         <h2 className='text-lg font-semibold text-gray-800 flex items-center gap-2'>
-                            Cake Batter Ingredients
+                            🎂 Cake Batter Ingredients
                         </h2>
                         <button
                             onClick={addBatterIngredient}
@@ -288,7 +289,7 @@ const CakeRecipeBuilder = () => {
                 <div className='bg-white rounded-xl p-6 shadow-sm border border-gray-200'>
                     <div className='flex items-center justify-between mb-4'>
                         <h2 className='text-lg font-semibold text-gray-800 flex items-center gap-2'>
-                            Cake Icing Ingredients
+                        🍰 Cake Icing Ingredients
                         </h2>
                         <button
                             onClick={addIcingIngredient}
