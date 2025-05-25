@@ -189,7 +189,7 @@ const CakeRecipeBuilder = () => {
                         {/* Bake Temperature */}
                         <div>
                             <label className='block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
-                                Bake Temperature
+                               🌡️ Bake Temperature
                             </label>
                             <div className='flex gap-1'>
                                 <input type="number" 
@@ -212,7 +212,7 @@ const CakeRecipeBuilder = () => {
                         {/* Bake Time */}
                         <div>
                             <label className='block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
-                                Bake Time (minutes)
+                               ⏲️ Bake Time (minutes)
                             </label>
                             <input
                                 type='number'
@@ -226,7 +226,7 @@ const CakeRecipeBuilder = () => {
                         {/* Serving Size */}
                         <div>
                             <label className='block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
-                                Serving Size
+                               🍽️ Serving Size
                             </label>
                             <input
                             type='text'
@@ -240,7 +240,7 @@ const CakeRecipeBuilder = () => {
                         {/* Notes */}
                         <div>
                             <label className='block text-sm font-medium text-gray-700 mb-2'>
-                                Optional Notes
+                              🗒️  Optional Notes
                             </label>
                             <textarea
                             value={notes}
