@@ -106,7 +106,7 @@ const CakeRecipeBuilder = () => {
         }
     };
 
-    const ingredientRow = ({ ingredient, index, section, availableIngredients, updateFn, removeFn}) => (
+    const ingredientRow = ({ ingredient, index, availableIngredients, updateFn, removeFn}) => (
         <div className='flex gap-2 items-center bg-white p-3 rounded-lg border border-gray-200 shadow-sm'>
             <select
                 value={ingredient.ingredient}
@@ -145,7 +145,7 @@ const CakeRecipeBuilder = () => {
             <button
                 onClick={() => removeFn(index)}
                 className='p-2 rounded-md text-red-500 hover:text-red-50 transition-colors'
-            >
+            > X
             </button>
         </div>
     );
