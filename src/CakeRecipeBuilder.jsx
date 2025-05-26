@@ -152,12 +152,12 @@ const CakeRecipeBuilder = () => {
     );
         
     return (    
-        <div className='min-h-screen bg-gradient-to-br from-orange-50 to-pink-50'>
+        <div className='min-h-screen bg-orange-50'>
             {/* Header */}
             <div className='bg-white shadow-sm border-b border-gray-200'>
                 <div className='max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8'>
-                    <div className='flex items-center gap-3'>
-                        <h1 className='text-2xl font-bold text-gray-800'>Cake Recipe Builder</h1>
+                    <div className='flex items-center'>
+                        <h1 className='text-2xl font-bold text-gray-800'>🧁 Cake Recipe Builder</h1>
                     </div>
                 </div>
             </div>
