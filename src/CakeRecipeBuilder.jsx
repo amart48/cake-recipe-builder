@@ -31,7 +31,7 @@ const CakeRecipeBuilder = () => {
       'Gelatin': { sections: ['icing']},
     }
     
-    const units = ['g', 'oz', 'cup', 'NA']
+    const units = ['g', 'oz', 'cups', 'NA']
 
     {/* Custom State Update Handlers */}
     const getBatterIngredients = () => {
