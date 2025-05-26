@@ -107,11 +107,11 @@ const CakeRecipeBuilder = () => {
     };
 
     const ingredientRow = ({ ingredient, index, availableIngredients, updateFn, removeFn}) => (
-        <div className='flex gap-2 items-center bg-white p-3 rounded-lg border border-gray-200 shadow-sm'>
+        <div className='flex flex-col gap-3 sm:gap-2 sm:flex-row items-center bg-white p-3 rounded-lg border border-gray-200 shadow-sm'>
             <select
                 value={ingredient.ingredient}
                 onChange={(e) => updateFn(index, 'ingredient', e.target.value)}
-                className='flex-1 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                className='w-full sm:flex-1 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
             >
                 <option value="">Select Ingredient...</option>
                 {availableIngredients.map(([name]) => (
@@ -127,14 +127,14 @@ const CakeRecipeBuilder = () => {
                 placeholder='Quantity'
                 value={ingredient.quantity}
                 onChange={(e) => updateFn(index, 'quantity', e.target.value)}
-                className='w-20 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
+                className='w-full sm:w-20 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
                 step='0.01'
                 min='0'
             />
             <select
                 value={ingredient.unit}
                 onChange={(e) => updateFn(index, 'unit', e.target.value)}
-                className='w-16 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                className='w-full sm:w-16 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
             >
                 {units.map((unit) => (
                     <option key={unit} value={unit}>
@@ -145,7 +145,7 @@ const CakeRecipeBuilder = () => {
 
             <button
                 onClick={() => removeFn(index)}
-                className='p-2 rounded-md text-red-500 hover:text-red-50 transition-colors'
+                className='w-full sm:w-auto p-2 rounded-md border border-gray-300 text-red-500 hover:text-red-50 transition-colors'
             > X
             </button>
         </div>
