@@ -33,19 +33,21 @@ const CakeRecipeBuilder = () => {
     
     const units = ['g', 'oz', 'cups', 'NA']
 
-    {/* Custom State Update Handlers */}
+    {/* Custom State Handlers */}
     const getBatterIngredients = () => {
         return Object.entries(allIngredients).filter(([name, info]) =>
             info.sections.includes('batter') || info.sections.includes('both')
         );
     };
 
+    {/* Custom State Handlers */}
     const getIcingIngredients = () => {
         return Object.entries(allIngredients).filter(([name, info]) =>
             info.sections.includes('icing') || info.sections.includes('both')
         );
     };
 
+    {/* Add and Remove Ingredient Functions */}
     const addBatterIngredient = () => {
         setBatterIngredients([...batterIngredients, { ingredient: '', quantity: '', unit: 'g' }]);
     };
@@ -62,10 +64,11 @@ const CakeRecipeBuilder = () => {
         setIcingIngredients(icingIngredients.filter((_, i) => i !== index));
     };
 
+    {/* Update Ingredient Functions */}
     const updateBatterIngredient = (index, field, value) => {
-        const updatedIngredients = [...batterIngredients];
-        updatedIngredients[index][field] = value;
-        setBatterIngredients(updatedIngredients);
+        const updatedIngredients = [...batterIngredients]; // Make a copy
+        updatedIngredients[index][field] = value; // Update the specific field
+        setBatterIngredients(updatedIngredients); // Set the updated state
     };
 
     const updateIcingIngredient = (index, field, value) => {
@@ -74,19 +77,22 @@ const CakeRecipeBuilder = () => {
         setIcingIngredients(updatedIngredients);
     };
 
+    {/* Save Recipe Function */}
     const saveRecipe = () => {
+        // Validate required fields
         if (!recipeName.trim()) {
             alert('Please fill in all required fields.');
             return;
         }
         
+        // Validate bake temperature and time
         const recipe = {
             name: recipeName,
             bakeTemp: `${bakeTemp}${tempUnit}`,
-            bakeTime: `${bakeTime} minutes`,
+            bakeTime: `${bakeTime} minutes`, 
             servingSize,
             notes,
-            batterIngredients: batterIngredients.filter(ing => ing.ingredient && ing.quantity),
+            batterIngredients: batterIngredients.filter(ing => ing.ingredient && ing.quantity), // Filter out empty ingredients
             icingIngredients: icingIngredients.filter(ing => ing.ingredient && ing.quantity),
         };
 
@@ -94,10 +100,11 @@ const CakeRecipeBuilder = () => {
         alert('Recipe saved successfully!');
     };
 
+    {/* Clear Form Confirmation */}
     const clearForm = () => {
         if (confirm('Are you sure you want to clear the form?')) {
-            setRecipeName('');
-            setBakeTemp('');
+            setRecipeName(''); // Reset values
+            setBakeTemp(''); 
             setBakeTime('');
             setServingSize('');
             setNotes('');
@@ -106,6 +113,7 @@ const CakeRecipeBuilder = () => {
         }
     };
 
+    {/* Render the ingredient row */}
     const ingredientRow = ({ ingredient, index, availableIngredients, updateFn, removeFn}) => (
         <div className='flex flex-col gap-3 sm:gap-2 sm:flex-row items-center bg-white p-3 rounded-lg border border-gray-200 shadow-sm'>
             <select
@@ -114,10 +122,9 @@ const CakeRecipeBuilder = () => {
                 className='w-full sm:flex-1 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
             >
                 <option value="">Select Ingredient...</option>
-                {availableIngredients.map(([name]) => (
+                {availableIngredients.map(([name]) => ( // Map through available ingredients
                     <option key={name} value={name}>
                         {name}
-
                 </option>
                 ))}
             </select>
@@ -126,17 +133,17 @@ const CakeRecipeBuilder = () => {
                 type="number"
                 placeholder='Quantity'
                 value={ingredient.quantity}
-                onChange={(e) => updateFn(index, 'quantity', e.target.value)}
+                onChange={(e) => updateFn(index, 'quantity', e.target.value)} // Update quantity
                 className='w-full sm:w-20 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
                 step='0.01'
                 min='0'
             />
             <select
                 value={ingredient.unit}
-                onChange={(e) => updateFn(index, 'unit', e.target.value)}
+                onChange={(e) => updateFn(index, 'unit', e.target.value)} // Update unit
                 className='w-full sm:w-16 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
             >
-                {units.map((unit) => (
+                {units.map((unit) => ( // Map through units
                     <option key={unit} value={unit}>
                         {unit}
                     </option>
@@ -144,13 +151,14 @@ const CakeRecipeBuilder = () => {
             </select>
 
             <button
-                onClick={() => removeFn(index)}
+                onClick={() => removeFn(index)} // Remove ingredient
                 className='w-full sm:w-auto p-2 rounded-md border border-gray-300 text-red-500 hover:text-red-50 transition-colors'
             > X
             </button>
         </div>
     );
-        
+    
+    {/* Main Component Render */}
     return (    
         <div className='min-h-screen bg-orange-50'>
             {/* Header */}
@@ -171,7 +179,7 @@ const CakeRecipeBuilder = () => {
                     <input 
                         type="text" 
                         value={recipeName}
-                        onChange={(e) => setRecipeName(e.target.value)}
+                        onChange={(e) => setRecipeName(e.target.value)} // Update recipe name
                         placeholder='Enter recipe name'
                         className='w-full p-3 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent' 
                     />
@@ -194,13 +202,13 @@ const CakeRecipeBuilder = () => {
                             <div className='flex gap-1'>
                                 <input type="number" 
                                 value={bakeTemp}
-                                onChange={(e) => setBakeTemp(e.target.value)}
+                                onChange={(e) => setBakeTemp(e.target.value)} // Update bake temperature
                                 placeholder='350'
                                 className='flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                                 />
                                 <select
                                 value={tempUnit}
-                                onChange={(e) => SetTempUnit(e.target.value)}
+                                onChange={(e) => SetTempUnit(e.target.value)} // Update temperature unit
                                 className='w-16 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                                 >
                                     <option value="°F">°F</option>
@@ -217,7 +225,7 @@ const CakeRecipeBuilder = () => {
                             <input
                                 type='number'
                                 value={bakeTime}
-                                onChange={(e) => setBakeTime(e.target.value)}
+                                onChange={(e) => setBakeTime(e.target.value)} // Update bake time
                                 placeholder='30'
                                 className='w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                             />
@@ -231,7 +239,7 @@ const CakeRecipeBuilder = () => {
                             <input
                             type='text'
                             value={servingSize}
-                            onChange={(e) => setServingSize(e.target.value)}
+                            onChange={(e) => setServingSize(e.target.value)} // Update serving size
                             placeholder='8-10 Servings'
                             className='w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                             />
@@ -244,7 +252,7 @@ const CakeRecipeBuilder = () => {
                             </label>
                             <textarea
                             value={notes}
-                            onChange={(e) => setNotes(e.target.value)}
+                            onChange={(e) => setNotes(e.target.value)} // Update notes
                             placeholder='Add any notes or tips here...'
                             className='w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none'
                             rows={4}
@@ -252,6 +260,7 @@ const CakeRecipeBuilder = () => {
                         </div>
                     </div>
                 </div>
+                {/* End Recipe Info */}
 
                 {/* Cake Batter Section */}
                 <div className='bg-white rounded-xl p-6 shadow-sm border border-gray-200 mt-6'>
@@ -272,7 +281,7 @@ const CakeRecipeBuilder = () => {
                         {batterIngredients.length === 0 && (
                             <p className='text-gray-500 text-center py-8'>No ingredients added yet. Click "Add Ingredient to begin."</p>
                         )}
-                        {batterIngredients.map((ingredient, index) => (
+                        {batterIngredients.map((ingredient, index) => ( // Map through batter ingredients
                             ingredientRow ({
                                 ingredient, 
                                 index,
@@ -283,7 +292,9 @@ const CakeRecipeBuilder = () => {
                             })
                         ))}
                     </div>
+                    {/* End Ingredients List */}
                 </div>
+                {/* End Cake Batter Section */}
 
                 {/* Cake Icing Section */}
                 <div className='bg-white rounded-xl p-6 shadow-sm border border-gray-200'>
@@ -292,7 +303,7 @@ const CakeRecipeBuilder = () => {
                         🍰 Cake Icing Ingredients
                         </h2>
                         <button
-                            onClick={addIcingIngredient}
+                            onClick={addIcingIngredient} // Add icing ingredient
                             className='flex items-center gap-2 px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors'
                         >+ Add Ingredient
                         </button>
@@ -302,8 +313,8 @@ const CakeRecipeBuilder = () => {
                         {icingIngredients.length === 0 && (
                             <p className='text-gray-500 text-center py-8'>No ingredients added yet. Click "Add Ingredient to begin."</p>
                         )}
-                        {icingIngredients.map((ingredient, index) => (
-                            ingredientRow ({
+                        {icingIngredients.map((ingredient, index) => ( // Map through icing ingredients
+                            ingredientRow ({ 
                                 ingredient, 
                                 index,
                                 section: 'icing',
@@ -314,6 +325,7 @@ const CakeRecipeBuilder = () => {
                         ))}
                     </div>
                 </div>
+                {/* End Cake Icing Section */}
 
                 {/* Save and Clear Buttons */}
                 <div className='flex justify-between sm:flex-row gap-3'>
@@ -330,8 +342,9 @@ const CakeRecipeBuilder = () => {
                         Clear Form
                     </button>
                 </div>
-                </div>
+                {/* End Buttons */}
             </div>
+        </div>
     );
 };
 
