@@ -239,7 +239,7 @@ const CakeRecipeBuilder = () => {
                                🍽️ Serving Size
                             </label>
                             <input
-                            type='text'
+                            type='number'
                             value={servingSize}
                             onChange={(e) => setServingSize(e.target.value)} // Update serving size
                             placeholder='8-10 Servings'
