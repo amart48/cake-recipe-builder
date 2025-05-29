@@ -7,7 +7,7 @@ const CakeRecipeBuilder = () => {
     const [bakeTemp, setBakeTemp] = useState('');
     const [bakeTime, setBakeTime] = useState('');
     const [tempUnit, SetTempUnit] = useState('°F');
-    const [servingSize, setServingSize] = useState();
+    const [servingSize, setServingSize] = useState('');
     const [notes, setNotes] = useState('');
   
     // State variables for the ingredients
@@ -114,8 +114,10 @@ const CakeRecipeBuilder = () => {
     };
 
     {/* Render the ingredient row */}
-    const ingredientRow = ({ ingredient, index, availableIngredients, updateFn, removeFn}) => (
-        <div className='flex flex-col gap-3 sm:gap-2 sm:flex-row items-center bg-white p-3 rounded-lg border border-gray-200 shadow-sm'>
+    const ingredientRow = ({ ingredient, index, availableIngredients, updateFn, removeFn, section}) => (
+        <div 
+        key ={`${section}-${index}`} // Unique key for each ingredient row
+        className='flex flex-col gap-3 sm:gap-2 sm:flex-row items-center bg-white p-3 rounded-lg border border-gray-200 shadow-sm'>
             <select
                 value={ingredient.ingredient}
                 onChange={(e) => updateFn(index, 'ingredient', e.target.value)}
@@ -173,7 +175,7 @@ const CakeRecipeBuilder = () => {
             <div className='max-w-4xl mx-auto px-4 py-6 space-y-6'>
                 {/* Recipe Name */}
                 <div className='bg-white shadow-sm rounded-lg p-6 border-gray-200'>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                    <label className='text-sm font-medium text-gray-700 mb-2'>
                         Recipe Name *
                     </label>
                     <input 
@@ -196,7 +198,7 @@ const CakeRecipeBuilder = () => {
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         {/* Bake Temperature */}
                         <div>
-                            <label className='block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
+                            <label className='text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
                                🌡️ Bake Temperature
                             </label>
                             <div className='flex gap-1'>
@@ -219,7 +221,7 @@ const CakeRecipeBuilder = () => {
 
                         {/* Bake Time */}
                         <div>
-                            <label className='block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
+                            <label className='text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
                                ⏲️ Bake Time (minutes)
                             </label>
                             <input
@@ -233,7 +235,7 @@ const CakeRecipeBuilder = () => {
                         
                         {/* Serving Size */}
                         <div>
-                            <label className='block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
+                            <label className='text-sm font-medium text-gray-700 mb-2 flex items-center gap-1'>
                                🍽️ Serving Size
                             </label>
                             <input
