@@ -13,3 +13,6 @@ This project was built using React and Vite. Follow the steps listed below to ru
 4. In the directory, run `npm run dev` to run the project in development mode.
 
 5. Open http://localhost:5173 or the one provided in the terminal. 
+
+Checkout the Project here: https://amart48.github.io/cake-recipe-builder/
+
